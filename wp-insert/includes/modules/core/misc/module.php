@@ -1,34 +1,120 @@
-<?php 
+<?php
+/* Begin AJAX Capability Guard */
+add_action( 'check_ajax_referer', 'wp_insert_ajax_capability_guard', 10, 1 );
+function wp_insert_ajax_capability_guard( $handlerAction ) {
+	$adminOnlyActions = [ 'wp-insert', 'wp-insert-admin-notice', 'wp-insert-adstxt-adsense-admin-notice' ];
+	if ( in_array( $handlerAction, $adminOnlyActions, true ) && ! current_user_can( 'manage_options' ) ) {
+		wp_die( -1, 403 );
+	}
+	if ( ( 'wp-insert-gutenberg' === $handlerAction ) && ! current_user_can( 'edit_posts' ) ) {
+		wp_die( -1, 403 );
+	}
+}
+/* End AJAX Capability Guard */
+
+/* Begin Output Helpers */
+/**
+ * Echo markup built by smartlogixControls (or other plugin-internal builders).
+ *
+ * The builder escapes every user-supplied value as it assembles each control
+ * (see smartlogixControls::get_control()), so the assembled string is already
+ * safe; escaping it again here would corrupt the form markup. This helper marks
+ * those call sites explicitly instead of scattering phpcs ignores.
+ *
+ * Never pass unvalidated request data to this function.
+ *
+ * @param string $html Pre-escaped markup.
+ */
+function wp_insert_echo_html( $html ) {
+	echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Documented contract: caller passes builder-escaped markup.
+}
+
+/**
+ * Echo advertisement / embed code exactly as the site administrator stored it.
+ *
+ * Ad code is raw third-party HTML, JavaScript and iframes by definition — the
+ * plugin's entire purpose is to emit it verbatim, so it cannot be escaped.
+ * Storage is restricted to users with `manage_options`, and users without
+ * `unfiltered_html` have their input filtered through wp_kses_post() on save
+ * (see wp_insert_sanitize_ad_field()).
+ *
+ * @param string $adCode Ad code to output.
+ */
+function wp_insert_echo_ad_code( $adCode ) {
+	echo $adCode; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Ad code is intentionally raw; capability-gated and kses-filtered on save.
+}
+/* End Output Helpers */
+
+/* Begin Ad Unit Types */
+function wp_insert_get_ad_unit_types() {
+	return [ 'inpostads', 'adwidgets', 'shortcodeads', 'inthemeads', 'pagelevelads' ];
+}
+
+function wp_insert_get_ad_code_fields() {
+	return [ 'primary_ad_code', 'secondary_ad_code', 'tertiary_ad_code', 'geo_group1_adcode', 'geo_group2_adcode' ];
+}
+
+/**
+ * Sanitize a single ad unit field on save.
+ *
+ * Ad code fields are stored raw (slashed, matching the legacy storage format the
+ * render pipeline expects) for users with the `unfiltered_html` capability; other
+ * users get wp_kses_post filtering. All remaining fields receive standard
+ * WordPress sanitization.
+ *
+ * @param string       $field Field name (without prefixes).
+ * @param string|array $value Raw (slashed) request value.
+ * @return string|array
+ */
+function wp_insert_sanitize_ad_field( $field, $value ) {
+	if ( in_array( $field, wp_insert_get_ad_code_fields(), true ) ) {
+		if ( current_user_can( 'unfiltered_html' ) ) {
+			return $value;
+		}
+		return wp_slash( wp_kses_post( wp_unslash( $value ) ) );
+	}
+	if ( is_array( $value ) ) {
+		return array_map( 'sanitize_text_field', $value );
+	}
+	if ( ( 'styles' === $field ) || ( 'notes' === $field ) || ( '_styles' === substr( $field, -7 ) ) ) {
+		return sanitize_textarea_field( $value );
+	}
+	return sanitize_text_field( $value );
+}
+/* End Ad Unit Types */
+
 /* Begin Version Upgrade */
-add_action('init', 'wp_insert_upgrade_version', 0);
+add_action( 'init', 'wp_insert_upgrade_version', 0 );
 function wp_insert_upgrade_version() {
-	$databaseVersion = get_option('wp_insert_version');
-	if($databaseVersion != WP_INSERT_VERSION) {
-		do_action('wp_insert_upgrade_database');
-		update_option('wp_insert_version', WP_INSERT_VERSION);
+	$databaseVersion = get_option( 'wp_insert_version' );
+	if ( $databaseVersion != WP_INSERT_VERSION ) {
+		do_action( 'wp_insert_upgrade_database' );
+		update_option( 'wp_insert_version', WP_INSERT_VERSION );
 	}
 }
 /* End Version Upgrade */
 
 /* Begin Misc Functions */
-function wp_insert_add_ordinal_number_suffix($num) {
-	if (!in_array(($num % 100),array(11,12,13))){
-		switch ($num % 10) {
-			case 1:  return $num.'st';
-			case 2:  return $num.'nd';
-			case 3:  return $num.'rd';
+function wp_insert_add_ordinal_number_suffix( $num ) {
+	if ( ! in_array( ( $num % 100 ), [ 11, 12, 13 ] ) ) {
+		switch ( $num % 10 ) {
+			case 1:
+				return $num . 'st';
+			case 2:
+				return $num . 'nd';
+			case 3:
+				return $num . 'rd';
 		}
 	}
-	return $num.'th';
+	return $num . 'th';
 }
 
-function wp_insert_get_domain_name_from_url($url){
-    $pieces = parse_url($url);
-    $domain = isset($pieces['host']) ? $pieces['host'] : '';
-    if(preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs)){
-        return $regs['domain'];
-    }
-    return false;
+function wp_insert_get_domain_name_from_url( $url ) {
+	$pieces = wp_parse_url( $url );
+	$domain = isset( $pieces['host'] ) ? $pieces['host'] : '';
+	if ( preg_match( '/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs ) ) {
+		return $regs['domain'];
+	}
+	return false;
 }
 /* End Misc Functions */
-?>
