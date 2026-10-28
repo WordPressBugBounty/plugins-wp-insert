@@ -1,5 +1,7 @@
 .wp-insert #wpInsertLogo img {
+    width: 573px;
     max-width: 100%;
+    height: auto;
 }
 
 .wp-insert .upgrade-notice {
@@ -216,5 +218,177 @@
 	.wp_insert_rule_block {
 		width: auto;
 		float: none;
+	}
+}
+/* Free resources slider */
+.wp-insert .wp-insert-resources {
+	margin: 16px 8px 24px;
+}
+
+.wp-insert .wp-insert-resources-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.wp-insert .wp-insert-resources-title {
+	margin: 0;
+	padding: 0;
+	font-size: 1.3em;
+	line-height: 1.4;
+}
+
+.wp-insert .wp-insert-resources-nav {
+	display: flex;
+	gap: 6px;
+	flex-shrink: 0;
+}
+
+.wp-insert .wp-insert-resources:not(.is-scrollable) .wp-insert-resources-nav {
+	visibility: hidden;
+}
+
+.wp-insert .wp-insert-resources-nav .button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	min-width: 0;
+	min-height: 0;
+	padding: 0;
+	line-height: 1;
+}
+
+.wp-insert .wp-insert-resources-nav .dashicons {
+	width: 18px;
+	height: 18px;
+	font-size: 18px;
+	line-height: 18px;
+}
+
+.wp-insert .wp-insert-resources-track {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: calc((100% - 48px) / 4);
+	column-gap: 16px;
+	margin: 0;
+	padding: 2px 2px 8px;
+	list-style: none;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scroll-padding-inline: 2px;
+	scrollbar-width: thin;
+	overscroll-behavior-x: contain;
+}
+
+.wp-insert .wp-insert-resources-item {
+	margin: 0;
+	scroll-snap-align: start;
+	min-width: 0;
+}
+
+.wp-insert .wp-insert-resources-link {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	background: #ffffff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	color: #1d2327;
+	text-decoration: none;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.wp-insert .wp-insert-resources-link:hover {
+	border-color: #2271b1;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.wp-insert .wp-insert-resources-link:focus {
+	box-shadow: none;
+	outline: none;
+}
+
+.wp-insert .wp-insert-resources-link:focus-visible {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 2px #2271b1;
+}
+
+.wp-insert .wp-insert-resources-image {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+	background: #f0f0f1;
+	border-bottom: 1px solid #dcdcde;
+}
+
+.wp-insert .wp-insert-resources-body {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	gap: 6px;
+	padding: 12px 14px 14px;
+}
+
+.wp-insert .wp-insert-resources-item-title {
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.wp-insert .wp-insert-resources-description {
+	flex: 1;
+	color: #50575e;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.wp-insert .wp-insert-resources-cta {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	margin-top: 4px;
+	color: #2271b1;
+	font-weight: 500;
+}
+
+.wp-insert .wp-insert-resources-link:hover .wp-insert-resources-cta {
+	color: #135e96;
+	text-decoration: underline;
+}
+
+.wp-insert .wp-insert-resources-cta .dashicons {
+	width: 14px;
+	height: 14px;
+	font-size: 14px;
+}
+
+@media screen and (max-width: 1280px) {
+	.wp-insert .wp-insert-resources-track {
+		grid-auto-columns: calc((100% - 32px) / 3);
+	}
+}
+
+@media screen and (max-width: 960px) {
+	.wp-insert .wp-insert-resources-track {
+		grid-auto-columns: calc((100% - 16px) / 2);
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.wp-insert .wp-insert-resources-track {
+		grid-auto-columns: 85%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wp-insert .wp-insert-resources-link {
+		transition: none;
 	}
 }

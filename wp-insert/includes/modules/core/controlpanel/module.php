@@ -46,6 +46,7 @@ function wp_insert_admin_page() {
 	?>
 	<div class="wrap wp-insert">
 		<h2 id="wp_insert_title" style="display: none;"></h2>
+		<?php do_action( 'wp_insert_admin_page_top' ); ?>
 		<div class="wp-list-table widefat plugin-install">
 			<?php do_action( 'wp_insert_plugin_card' ); ?>			
 			<input type="hidden" id="wp_insert_admin_ajax" name="wp_insert_admin_ajax" value="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" />
@@ -60,13 +61,12 @@ add_action( 'wp_insert_plugin_card', 'wp_insert_title_plugin_card', 0 );
 function wp_insert_title_plugin_card() {
 	echo '<div class="plugin-card">';
 		echo '<div class="plugin-card-top">';
-			echo '<a id="wpInsertLogo" href="https://www.wpinsert.smartlogix.co.in"><img src="' . esc_url( WP_INSERT_URL . '/includes/assets/images/header-banner.png?' . WP_INSERT_VERSION ) . '" alt="Wp-Insert" /></a>';
+			echo '<a id="wpInsertLogo" href="https://wordpress.org/plugins/wp-insert/"><img src="' . esc_url( WP_INSERT_URL . '/includes/assets/images/header-banner.jpg?' . WP_INSERT_VERSION ) . '" alt="Wp-Insert" /></a>';
 		echo '</div>';
 		echo '<div class="plugin-card-bottom">';
 			echo '<div id="wpInsertMeta">';
-				echo '<p><b>Donate :</b><br /><a target="_blank" href="https://wpinsert.smartlogix.co.in/support/">Click Here</a> to Donate and Promote further development of this plugin.</p>';
-				echo '<p><b>Like Us :</b><br /><a target="_blank" href="https://www.facebook.com/SmartLogix/">Click here</a> to like and support us on Facebook</p>';
-				echo '<div style="font-size: 16px; font-weight: 600; background: #FFFFAA; display: block; padding: 10px; text-align: justify; border: 1px dashed #FF0000; margin: 10px 0 0; border-radius: 5px;">Thanks for using Wp-Insert.  Positive <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/wp-insert#postform">reviews</a> are a great motivation for us to add new features, fix bugs and spend more time working on Wp-Insert.<br />Looking forward to your continued support and patronage - <i>Namith Jawahar</i>.</div>';
+				echo '<p><b>Who is Broadstreet?</b><br /><a target="_blank" href="https://broadstreetads.com/?utm_source=wp-insert-admin">Click here</a> to see more of what we do</p>';
+				echo '<div style="font-size: 16px; font-weight: 600; background: #FFFFAA; display: block; padding: 10px; text-align: justify; border: 1px dashed #FF0000; margin: 10px 0 0; border-radius: 5px;">We\'re glad you\'re here. Positive reviews really help us get in front of more WordPress users to help them with their ad management. If you like the plugin, <a target="_blank" href="https://wordpress.org/support/plugin/wp-insert/reviews/#new-post">leave a note</a>! Thank you so much for your support.<br /><br />WP-Insert was created by Namith Jawahar of SmartLogix, who maintained it for over 15 years. It is now lovingly managed by Broadstreet, the ad manager built for small publishers.</div>';
 			echo '</div>';
 		echo '</div>';
 	echo '</div>';

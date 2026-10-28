@@ -1,22 +1,23 @@
 === Wp-Insert ===
-Contributors: namithjawahar
-Donate link: https://wpinsert.smartlogix.co.in/support/
+Contributors: broadstreetads, namithjawahar
 Tags: adsense, ad management, ads.txt, ad rotation, tracking codes
 Requires at least: 6.3
-Tested up to: 7.0
+Tested up to: 7.1.3
 Requires PHP: 7.4
-Stable tag: 2.6.0
+Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-The Ultimate Adsense / Ad-Management Plugin for WordPress.
+Simple Ad-Management for WordPress.
 
 == Description ==
 
-Wp-Insert is a powerful yet easy to use ad management / ad insertion plugin which
-does a lot more than ad management and insertion. Ad code from any network —
-AdSense, iframes, JavaScript snippets or plain HTML — is inserted exactly as you
-provide it.
+WP-Insert is a simple and powerful plugin for ad management and insertion. Bring
+your ad code from any source: AdSense, iframes, JavaScript snippets, HTML, etc. and
+WP-Insert will place it on your site.
+
+Originally built and managed by SmartLogix for 15 years. Now lovingly maintained by
+[Broadstreet](https://broadstreetads.com/?utm_source=wp-insert-readme), the ad manager built for small publishers.
 
 = Features =
 
@@ -74,10 +75,6 @@ Only users with the `manage_options` capability (administrators on a single site
 Users who do not additionally have the `unfiltered_html` capability have their
 input filtered through `wp_kses_post()` before it is saved.
 
-= Where can I get support? =
-
-Visit the [Wp-Insert support site](https://wpinsert.smartlogix.co.in/support/).
-
 == External Services ==
 
 This plugin does not send visitor data to any external service.
@@ -105,6 +102,16 @@ your control.
 9. Ad widgets which support the rules system.
 
 == Changelog ==
+
+= 2.7.0 =
+* Wp-Insert is now maintained by Broadstreet.
+* New Wp-Insert banner on the plugin admin page.
+* Added a "Free resources for small publishers" slider to the top of the
+  plugin admin page, linking to free guides and webinars on selling, pricing
+  and packaging digital advertising. Its images are bundled with the plugin,
+  so the admin page makes no requests to outside services.
+* No changes to how ads are inserted or displayed. Existing ad units, ad code
+  and settings carry over unchanged.
 
 = 2.6.0 =
 * Modernisation release. Existing ad code and settings are preserved; no
@@ -136,6 +143,10 @@ your control.
 * Plugin header and coding standards updates.
 
 == Upgrade Notice ==
+
+= 2.7.0 =
+New maintainer and refreshed admin page. Your existing ad units, ad code and
+settings carry over unchanged.
 
 = 2.6.0 =
 Compatibility, security and coding standards release. Your existing ad units,
